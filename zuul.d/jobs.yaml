@@ -1,0 +1,7 @@
+- job:
+    name: testo
+    parent: null
+    nodeset:
+      nodes:
+        - name: nodepool-focal
+          label: nodepool-focal
