@@ -4,11 +4,10 @@
     Runs tests and uploads results upstream.
   manager: independent
   require:
-    opendev.org:
-      open: True
+    review.opendev.org:
       current-patchset: True
   trigger:
-    opendev.org:
+    review.opendev.org:
       - event: patchset-created
       - event: change-restored
       - event: comment-added
