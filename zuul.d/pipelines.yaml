@@ -4,10 +4,10 @@
     Runs tests and uploads results upstream.
   manager: independent
   require:
-    review.opendev.org:
+    gerrit:
       current-patchset: True
   trigger:
-    review.opendev.org:
+    gerrit:
       - event: patchset-created
       - event: change-restored
       - event: comment-added

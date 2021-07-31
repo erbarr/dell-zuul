@@ -2,4 +2,4 @@
     name: opendev/ci-sandbox
     check:
       jobs:
-        - noop
+        - testo

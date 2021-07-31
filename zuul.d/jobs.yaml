@@ -5,3 +5,4 @@
       nodes:
         - name: nodepool-focal
           label: nodepool-focal
+    run: playbooks/testo.yaml
