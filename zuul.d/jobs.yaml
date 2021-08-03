@@ -9,7 +9,7 @@
 
 - job:
     name: testo
-    base: testo-base
+    base: testa-base
     nodeset:
       nodes:
         - name: nodepool-focal
