@@ -4,6 +4,7 @@
       nodes:
         - name: nodepool-focal
           label: nodepool-focal
+    pre-run: playbooks/testo.yaml
     post-run: playbooks/testo.yaml
 
 - job:
