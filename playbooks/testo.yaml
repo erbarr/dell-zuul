@@ -1,4 +1,4 @@
 - hosts: all
   tasks:
     - name: testo
-      command: "ip a"
+      shell: ip a
