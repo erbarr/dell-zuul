@@ -1,9 +1,6 @@
 - job:
     name: testo-base
-    nodeset:
-      nodes:
-        - name: nodepool-focal
-          label: nodepool-focal
+    parent: null
     pre-run: playbooks/testo.yaml
     post-run: playbooks/testo.yaml
 
