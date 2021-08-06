@@ -1,4 +1,4 @@
 - hosts: all
   tasks:
-    - name: testo
-      cmd: whoami
+  - name: testo
+    cmd: whoami
