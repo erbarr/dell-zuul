@@ -1,3 +1,5 @@
-- hosts: all
+- name: testo
+  hosts: all
   tasks:
+  - name: whoami
     shell: whoami
