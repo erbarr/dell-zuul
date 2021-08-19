@@ -1,5 +1,7 @@
 - name: testo
   hosts: all
+  roles:
+    - start-zuul-console
   tasks:
   - name: whoami
     shell: whoami

@@ -3,8 +3,6 @@
     parent: null
     pre-run: playbooks/testo.yaml
     post-run: playbooks/testo.yaml
-    roles:
-      - start-zuul-console
 
 - job:
     name: testo
