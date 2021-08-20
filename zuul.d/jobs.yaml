@@ -1,8 +1,8 @@
 - job:
     name: testo-base
     parent: null
-    pre-run: playbooks/testo.yaml
-    post-run: playbooks/testo.yaml
+    pre-run: playbooks/pre.yaml
+    post-run: playbooks/post.yaml
 
 - job:
     name: testo

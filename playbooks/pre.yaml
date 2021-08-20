@@ -1,0 +1,7 @@
+- name: pre-test
+  hosts: all
+  roles:
+    - prepare-workspace
+    - validate-host
+    - ensure-output-dirs
+    - log-inventory

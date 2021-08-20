@@ -1,10 +1,5 @@
 - name: testo
   hosts: all
-  roles:
-    - prepare-workspace
-    - validate-host
-    - ensure-output-dirs
-    - log-inventory
   tasks:
   - name: whoami
     shell: whoami
