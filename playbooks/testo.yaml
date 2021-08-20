@@ -1,7 +1,10 @@
 - name: testo
   hosts: all
   roles:
-    - start-zuul-console
+    - prepare-workspace
+    - validate-host
+    - ensure-output-dirs
+    - log-inventory
   tasks:
   - name: whoami
     shell: whoami
