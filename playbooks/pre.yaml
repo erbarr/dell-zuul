@@ -24,6 +24,7 @@
 
 - hosts: all
   roles:
+    - prepare-workspace
     - validate-host
     - prepare-workspace-git
     - mirror-info
