@@ -1,5 +1,9 @@
-- name: post-test
-  hosts: all
+- hosts: all
   roles:
     - fetch-output
-    - generate-zuul-manifest
+    - merge-output-to-logs
+
+- hosts: all
+  ignore_errors: yes
+  roles:
+    - remove-build-sshkey

@@ -1,7 +1,32 @@
-- name: pre-test
-  hosts: all
+- hosts: localhost
   roles:
-    - prepare-workspace
-    - validate-host
-    - ensure-output-dirs
+    - role: emit-job-header
+      zuul_log_path_shard_build: true
     - log-inventory
+
+- hosts: all
+  pre_tasks:
+    - name: Gather network facts
+      setup:
+        gather_subset: 'network'
+    - name: Check growroot logs
+      become: yes
+      ignore_errors: yes
+      command: journalctl -u growroot
+  roles:
+    - add-build-sshkey
+    - start-zuul-console
+    - ensure-output-dirs
+
+- hosts: all
+  roles:
+    - configure-unbound
+
+- hosts: all
+  roles:
+    - validate-host
+    - prepare-workspace-git
+    - mirror-info
+    - role: configure-mirrors
+      set_apt_mirrors_trusted: True
+      mirror_use_ssl: True
