@@ -6,6 +6,8 @@
 
 - hosts: all
   pre_tasks:
+    - name: Start zuul console daemon
+      zuul-console:
     - name: Gather network facts
       setup:
         gather_subset: 'network'
