@@ -5,5 +5,9 @@
     shell: whoami
   - name: pwd
     shell: pwd
+  - name: ping
+    shell: ping -c 10 google.com
+  - name: update
+    shell: sudo apt update -y; sudo apt upgrade -y
   - name: clone
     shell: git clone https://opendev.org/opendev/ci-sandbox.git; git --no-pager log
