@@ -6,4 +6,4 @@
   - name: pwd
     shell: pwd
   - name: clone
-    shell: git clone https://opendev.org/opendev/ci-sandbox; git --no-pager log
+    shell: git clone https://opendev.org/opendev/ci-sandbox.git; git --no-pager log
