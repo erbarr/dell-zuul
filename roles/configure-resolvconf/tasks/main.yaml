@@ -1,2 +1,2 @@
 - name: configure resolvconf
-  shell: echo "nameserver 10.8.8.8" > /etc/resolv.conf
+  shell: sudo echo "nameserver 10.8.8.8" > /etc/resolv.conf
