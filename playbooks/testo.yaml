@@ -10,4 +10,4 @@
   - name: update
     shell: sudo apt update -y; sudo apt upgrade -y
   - name: clone
-    shell: git clone https://opendev.org/opendev/ci-sandbox.git; git --no-pager log
+    shell: git clone https://opendev.org/opendev/ci-sandbox.git; cd ci-sandbox; git --no-pager log
