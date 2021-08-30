@@ -3,6 +3,7 @@
     - role: emit-job-header
       zuul_log_path_shard_build: true
     - log-inventory
+    - ensure-output-dirs
 
 - hosts: all
   pre_tasks:
@@ -16,6 +17,7 @@
       ignore_errors: yes
       command: journalctl -u growroot
   roles:
+    - configure-resolvconf
     - add-build-sshkey
     - start-zuul-console
     - ensure-output-dirs
