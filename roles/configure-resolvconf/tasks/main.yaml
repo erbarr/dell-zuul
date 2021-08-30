@@ -1,5 +1,2 @@
-- hosts: all
-  name: configure resolvconf
-  tasks:
-    - name: Run configure resolvconf
-      shell: echo "nameserver 10.8.8.8" > /etc/resolv.conf
+- name: configure resolvconf
+  shell: echo "nameserver 10.8.8.8" > /etc/resolv.conf
