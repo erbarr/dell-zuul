@@ -9,5 +9,7 @@
     shell: ping -c 10 google.com
   - name: update
     shell: sudo apt update -y; sudo apt upgrade -y
+  - name: branch
+    shell: echo {{ zuul.branch }}
   - name: clone
     shell: git clone https://opendev.org/opendev/ci-sandbox.git; cd ci-sandbox; git --no-pager log
