@@ -1,5 +1,5 @@
 - project:
-    name: opendev/ci-sandbox
+    name: opendev.org/opendev/ci-sandbox
     check:
       jobs:
         - noop
