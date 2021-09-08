@@ -12,6 +12,6 @@
   - name: branch
     shell: echo {{ zuul.branch }}
   - name: clone
-    shell: git clone https://opendev.org/opendev/ci-sandbox.git; cd ci-sandbox; git --no-pager log
+    shell: mv src/opendev.org/opendev/ci-sandbox .; cd ci-sandbox; git --no-pager log
   - name: make logs
     shell: echo yo > zuul-output/logs/yo.txt
