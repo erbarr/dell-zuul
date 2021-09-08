@@ -13,5 +13,5 @@
   roles:
     - generate-zuul-manifest
     - role: upload-logs
-      zuul_log_url: "http://localhost:8000"
+      zuul_log_url: "http://172.16.97.20:9000"
 #    - add-wait
