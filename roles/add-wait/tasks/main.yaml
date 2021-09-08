@@ -1,0 +1,2 @@
+- name: Wait 10 minutes
+  shell: sleep 600

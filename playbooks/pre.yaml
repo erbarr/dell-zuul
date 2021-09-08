@@ -18,7 +18,6 @@
       command: journalctl -u growroot
   roles:
     - configure-resolvconf
-    - add-build-sshkey
     - start-zuul-console
     - ensure-output-dirs
 

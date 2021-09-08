@@ -14,3 +14,4 @@
     - generate-zuul-manifest
     - role: upload-logs
       zuul_log_url: "http://172.16.97.20:8000"
+    - add-wait
