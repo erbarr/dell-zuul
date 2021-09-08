@@ -14,4 +14,4 @@
   - name: clone
     shell: git clone https://opendev.org/opendev/ci-sandbox.git; cd ci-sandbox; git --no-pager log
   - name: make logs
-    shell: mkdir logs; echo yo > logs/yo.txt
+    shell: echo yo > zuul-output/logs/yo.txt
