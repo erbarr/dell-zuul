@@ -11,7 +11,12 @@
 - hosts: localhost
   gather_facts: False
   roles:
+    - role: add-fileserver
+        fileserver: "{{ site_logs }}"
     - generate-zuul-manifest
+    
+- hosts: "{{ site_logs.fqdn }}"
+  gather_facts: False
+  roles:
     - role: upload-logs
       zuul_log_url: "http://172.16.97.20:9000"
-#    - add-wait
