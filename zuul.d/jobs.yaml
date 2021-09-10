@@ -3,6 +3,9 @@
     parent: null
     pre-run: playbooks/pre.yaml
     post-run: playbooks/post.yaml
+    secrets:
+      - name: site_logs
+        secret: site_logs
 
 - job:
     name: testo
