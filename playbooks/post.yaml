@@ -12,7 +12,7 @@
   gather_facts: False
   roles:
     - role: add-fileserver
-        fileserver: "{{ site_logs }}"
+      fileserver: "{{ site_logs }}"
     - generate-zuul-manifest
     
 - hosts: "{{ site_logs.fqdn }}"
