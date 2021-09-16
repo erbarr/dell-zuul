@@ -1,3 +1,3 @@
-zuul_logserver_root: /srv/static/logs
+zuul_logserver_root: /var/www/html/logs
 zuul_log_compress: false
 zuul_log_verbose: true
