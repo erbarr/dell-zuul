@@ -19,4 +19,4 @@
   gather_facts: False
   roles:
     - role: upload-logs
-      zuul_log_url: "https://172.16.97.20"
+      zuul_log_url: "http://172.16.97.20/logs"
