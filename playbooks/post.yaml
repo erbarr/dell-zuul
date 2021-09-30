@@ -19,5 +19,5 @@
   gather_facts: False
   roles:
     - role: upload-logs
-      zuul_log_url: "https://stash.dellemc-community.org/logs"
+      zuul_log_url: "http://stash.dellemc-community.org/logs"
       zuul_log_compress: false
