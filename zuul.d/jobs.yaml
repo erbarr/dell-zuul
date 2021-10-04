@@ -8,6 +8,362 @@
         secret: site_logs
 
 - job:
+    name: dell-devstack-base
+    parent: null
+    abstract: true
+    description: |
+      Base abstract Devstack job.
+
+      Defines plays and base variables, but it does not include any project
+      and it does not run any service by default. This is a common base for
+      all single Devstack jobs, single or multinode.
+      Variables are defined in job.vars, which is what is then used by single
+      node jobs and by multi node jobs for the controller, as well as in
+      job.group-vars.peers, which is what is used by multi node jobs for subnode
+      nodes (everything but the controller).
+    required-projects:
+      - opendev.org/openstack/devstack
+    roles:
+      - zuul: opendev.org/openstack/devstack-gate
+      - zuul: opendev.org/openstack/openstack-zuul-jobs
+    vars:
+      devstack_localrc:
+        DATABASE_PASSWORD: secret
+        RABBIT_PASSWORD: secret
+        ADMIN_PASSWORD: secret
+        SERVICE_PASSWORD: secret
+        NETWORK_GATEWAY: 172.16.99.254
+        FIXED_RANGE: 172.16.99.0/24
+        IPV4_ADDRS_SAFE_TO_USE: 172.16.99.0/24
+        FLOATING_RANGE: 172.16.97.0/24
+        PUBLIC_NETWORK_GATEWAY: 172.16.97.254
+        LOGFILE: /opt/stack/logs/devstacklog.txt
+        LOG_COLOR: false
+        VERBOSE: true
+        VERBOSE_NO_TIMESTAMP: true
+        NOVNC_FROM_PACKAGE: true
+        ERROR_ON_CLONE: true
+        # Gate jobs can't deal with nested virt. Disable it by default.
+        LIBVIRT_TYPE: '{{ devstack_libvirt_type | default("qemu") }}'
+      devstack_services:
+        # Ignore any default set by devstack. Emit a "disable_all_services".
+        base: false
+      zuul_copy_output:
+        '{{ devstack_conf_dir }}/local.conf': logs
+        '{{ devstack_conf_dir }}/localrc': logs
+        '{{ devstack_conf_dir }}/.localrc.auto': logs
+        '{{ devstack_conf_dir }}/.stackenv': logs
+        '{{ devstack_log_dir }}/dstat-csv.log': logs
+        '{{ devstack_log_dir }}/devstacklog.txt': logs
+        '{{ devstack_log_dir }}/devstacklog.txt.summary': logs
+        '{{ devstack_log_dir }}/tcpdump.pcap': logs
+        '{{ devstack_log_dir }}/worlddump-latest.txt': logs
+        '{{ devstack_full_log}}': logs
+        '{{ stage_dir }}/verify_tempest_conf.log': logs
+        '{{ stage_dir }}/apache': logs
+        '{{ stage_dir }}/apache_config': logs
+        '{{ stage_dir }}/etc': logs
+        /var/log/rabbitmq: logs
+        /var/log/postgresql: logs
+        /var/log/mysql: logs
+        /var/log/libvirt: logs
+        /etc/libvirt: logs
+        /etc/sudoers: logs
+        /etc/sudoers.d: logs
+        '{{ stage_dir }}/iptables.txt': logs
+        '{{ stage_dir }}/df.txt': logs
+        '{{ stage_dir }}/pip2-freeze.txt': logs
+        '{{ stage_dir }}/pip3-freeze.txt': logs
+        '{{ stage_dir }}/dpkg-l.txt': logs
+        '{{ stage_dir }}/rpm-qa.txt': logs
+        '{{ stage_dir }}/core': logs
+        '{{ stage_dir }}/listen53.txt': logs
+        '{{ stage_dir }}/deprecations.log': logs
+        '{{ stage_dir }}/audit.log': logs
+        /etc/ceph: logs
+        /var/log/ceph: logs
+        /var/log/openvswitch: logs
+        /var/log/glusterfs: logs
+        /etc/glusterfs/glusterd.vol: logs
+        /etc/resolv.conf: logs
+        /var/log/unbound.log: logs
+      extensions_to_txt:
+        conf: true
+        log: true
+        localrc: true
+        stackenv: true
+        auto: true
+    pre-run: playbooks/pre-devstack.yaml
+    run: playbooks/run-devstack.yaml
+    post-run: playbooks/post-devstack.yaml
+    irrelevant-files:
+      # Documentation related
+      - ^.*\.rst$
+      - ^api-ref/.*$
+      - ^doc/.*$
+      - ^releasenotes/.*$
+      # Translations
+      - ^.*/locale/.*po$
+
+- job:
+    name: dell-devstack-minimal
+    parent: dell-devstack-base
+    description: |
+      Minimal devstack base job, intended for use by jobs that need
+      less than the normal minimum set of required-projects
+    required-projects:
+      - opendev.org/openstack/requirements
+    vars:
+      devstack_localrc:
+        # Multinode specific settings
+        SERVICE_HOST: "{{ hostvars['controller']['nodepool']['private_ipv4'] }}"
+        HOST_IP: "{{ hostvars['controller']['nodepool']['private_ipv4'] }}"
+        PUBLIC_BRIDGE_MTU: '{{ external_bridge_mtu }}'
+      devstack_services:
+        # Shared services
+        dstat: true
+        etcd3: true
+        memory_tracker: true
+        mysql: true
+        rabbit: true
+
+- job:
+    name:  dell-devstack
+    parent: dell-devstack-minimal
+    description: |
+      Base devstack job for integration gate.
+
+      This base job can be used for single node and multinode devstack jobs.
+
+      With a single node nodeset, this job sets up an "all-in-one" (aio)
+      devstack with the seven OpenStack services included in the devstack tree:
+      keystone, glance, cinder, neutron, nova, placement, and swift.
+
+      With a two node nodeset, this job sets up an aio + compute node.
+      The controller can be customised using host-vars.controller, the
+      sub-nodes can be customised using group-vars.subnode.
+
+      Descendent jobs can enable / disable services, add devstack configuration
+      options, enable devstack plugins, configure log files or directories to be
+      transferred to the log server.
+
+      The job assumes that there is only one controller node. The number of
+      subnodes can be scaled up seamlessly by setting a custom nodeset in
+      job.nodeset.
+
+      The run playbook consists of a single role, so it can be easily rewritten
+      and extended.
+    required-projects:
+      - opendev.org/openstack/cinder
+      - opendev.org/openstack/glance
+      - opendev.org/openstack/keystone
+      - opendev.org/openstack/neutron
+      - opendev.org/openstack/nova
+      - opendev.org/openstack/placement
+      - opendev.org/openstack/swift
+    timeout: 7200
+    vars:
+      devstack_localrc:
+        # Common OpenStack services settings
+        SWIFT_REPLICAS: 1
+        SWIFT_START_ALL_SERVICES: false
+        SWIFT_HASH: 1234123412341234
+        DEBUG_LIBVIRT_COREDUMPS: true
+        NOVA_VNC_ENABLED: true
+        OVN_DBS_LOG_LEVEL: dbg
+      devstack_local_conf:
+        post-config:
+          $NEUTRON_CONF:
+            DEFAULT:
+              global_physnet_mtu: '{{ external_bridge_mtu }}'
+      devstack_services:
+        # Core services enabled for this branch.
+        # This list replaces the test-matrix.
+        # Shared services
+        dstat: true
+        etcd3: true
+        memory_tracker: true
+        mysql: true
+        rabbit: true
+        tls-proxy: true
+        # Keystone services
+        key: true
+        # Glance services
+        g-api: true
+        # Nova services
+        n-api: true
+        n-api-meta: true
+        n-cond: true
+        n-cpu: true
+        n-novnc: true
+        n-sch: true
+        # Placement service
+        placement-api: true
+        # OVN services
+        ovn-controller: true
+        ovn-northd: true
+        ovs-vswitchd: true
+        ovsdb-server: true
+        # Neutron services
+        q-svc: true
+        q-ovn-metadata-agent: true
+        # Swift services
+        s-account: true
+        s-container: true
+        s-object: true
+        s-proxy: true
+        # Cinder services
+        c-api: true
+        c-bak: true
+        c-sch: true
+        c-vol: true
+        cinder: true
+        # Services we don't need.
+        # This section is not really needed, it's for readability.
+        horizon: false
+        tempest: false
+        # Test matrix emits ceilometer but ceilomenter is not installed in the
+        # integrated gate, so specifying the services has not effect.
+        # ceilometer-*: false
+
+- job:
+    name: dell-devstack-tempest
+    parent: dell-devstack
+    description: |
+      Base Tempest job.
+
+      This Tempest job provides the base for both the single and multi-node
+      test setup. To run a multi-node test inherit from devstack-tempest and
+      set the nodeset to a multi-node one.
+    required-projects: &base_required-projects
+      - opendev.org/openstack/tempest
+    timeout: 7200
+    roles: &base_roles
+      - zuul: opendev.org/openstack/devstack
+    vars: &base_vars
+      devstack_services:
+        tempest: true
+      devstack_local_conf:
+        test-config:
+          $TEMPEST_CONFIG:
+            compute:
+              min_compute_nodes: "{{ groups['compute'] | default(['controller']) | length }}"
+      test_results_stage_name: test_results
+      zuul_copy_output:
+        '{{ devstack_base_dir }}/tempest/etc/tempest.conf': logs
+        '{{ devstack_base_dir }}/tempest/etc/accounts.yaml': logs
+        '{{ devstack_base_dir }}/tempest/tempest.log': logs
+        '{{ stage_dir }}/{{ test_results_stage_name }}.subunit': logs
+        '{{ stage_dir }}/{{ test_results_stage_name }}.html': logs
+        '{{ stage_dir }}/stackviz': logs
+      extensions_to_txt:
+        conf: true
+        log: true
+        yaml: true
+        yml: true
+    run: playbooks/devstack-tempest.yaml
+    post-run: playbooks/post-tempest.yaml
+
+- job:
+    name: dell-ironic-base
+    abstract: true
+    description: Base job for devstack/tempest based ironic jobs.
+    parent: dell-devstack-tempest
+    post-run: playbooks/ci-workarounds/get_extra_logging.yaml
+    timeout: 10800
+    required-projects:
+      - opendev.org/openstack/ironic
+      - opendev.org/openstack/ironic-python-agent
+      - opendev.org/openstack/ironic-python-agent-builder
+      - opendev.org/openstack/ironic-tempest-plugin
+      - opendev.org/openstack/virtualbmc
+    irrelevant-files:
+      - ^.*\.rst$
+      - ^api-ref/.*$
+      - ^doc/.*$
+      - ^driver-requirements.txt$
+      - ^install-guide/.*$
+      - ^ironic/locale/.*$
+      - ^ironic/tests/.*$
+      - ^releasenotes/.*$
+      - ^setup.cfg$
+      - ^test-requirements.txt$
+      - ^tox.ini$
+    vars:
+      tox_envlist: all
+      tempest_test_timeout: 2400
+      tempest_test_regex: ironic_tempest_plugin.tests.scenario
+      tempest_concurrency: 1
+      devstack_localrc:
+        DEFAULT_INSTANCE_TYPE: baremetal
+        FORCE_CONFIG_DRIVE: True
+        INSTALL_TEMPEST: False # Don't install a tempest package globaly
+        VIRT_DRIVER: ironic
+        BUILD_TIMEOUT: 1800
+        IRONIC_BAREMETAL_BASIC_OPS: True
+        IRONIC_BUILD_DEPLOY_RAMDISK: False
+        IRONIC_CALLBACK_TIMEOUT: 1800
+        IRONIC_DEPLOY_DRIVER: ipmi
+        IRONIC_INSPECTOR_BUILD_RAMDISK: False
+        IRONIC_INSPECTOR_TEMPEST_INTROSPECTION_TIMEOUT: 1200
+        IRONIC_TEMPEST_BUILD_TIMEOUT: 1800
+        IRONIC_TEMPEST_WHOLE_DISK_IMAGE: False
+        IRONIC_VM_COUNT: 2
+        IRONIC_VM_EPHEMERAL_DISK: 1
+        IRONIC_VM_SPECS_RAM: 2800
+        IRONIC_VM_LOG_DIR: '{{ devstack_base_dir }}/ironic-bm-logs'
+        # NOTE(dtantsur): in some jobs we end up with 12 disks total, so reduce
+        # each of them. For don't need all 10 GiB for CirrOS anyway.
+        IRONIC_VM_SPECS_DISK: 4
+        IRONIC_VM_SPECS_CPU: 2
+        IRONIC_HW_ARCH: x86_64
+        IRONIC_HW_NODE_CPU: 4
+        IRONIC_HW_NODE_RAM: 8192
+        IRONIC_HW_NODE_DISK: 40
+        Q_AGENT: openvswitch
+        Q_ML2_TENANT_NETWORK_TYPE: vxlan
+        Q_ML2_PLUGIN_MECHANISM_DRIVERS: openvswitch
+        SERVICE_TIMEOUT: 90
+        # NOTE(TheJulia): Devstack default glance limit is 1GB, we need
+        # something more like 5GB for baremetal jobs due to image sizes
+        # with firmware.
+        GLANCE_LIMIT_IMAGE_SIZE_TOTAL: 5000
+        # NOTE(TheJulia): Disable neutron firewall as bug
+        # https://bugs.launchpad.net/neutron/+bug/1944201
+        # causes us an abnormally high job failure rate due to the ports
+        # not being found (as neutron crashed on initailization).
+        Q_USE_SECGROUP: False
+      devstack_plugins:
+        ironic: https://opendev.org/openstack/ironic
+      tempest_plugins:
+        - ironic-tempest-plugin
+      zuul_copy_output:
+        '{{ devstack_base_dir }}/ironic-bm-logs': 'logs'
+        '{{ devstack_base_dir }}/data/networking-generic-switch/netmiko_session.log': 'logs'
+      devstack_services:
+        # TODO: re-enable dstat once https://storyboard.openstack.org/#!/story/2008185
+        # is resolved
+        dstat: false
+        q-agt: true
+        q-dhcp: true
+        q-l3: true
+        q-meta: true
+        q-metering: true
+        q-svc: true
+        ovn-controller: false
+        ovn-northd: false
+        q-ovn-metadata-agent: false
+        c-api: False
+        c-bak: False
+        c-sch: False
+        c-vol: False
+        cinder: False
+        s-account: False
+        s-container: False
+        s-object: False
+        s-proxy: False
+
+- job:
     name: testo
     parent: testo-base
     nodeset:
