@@ -16,13 +16,13 @@
     cmd: |
       cd /opt/stack/molteniron
       mkdir -p /opt/stack/logs/molteniron
-      echo "mi_port: 5656 >> conf.yaml"
-      echo "serverIP: 172.16.97.20 >> conf.yaml"
-      echo "maxTime: 120000 >> conf.yaml"
-      echo "logdir: /opt/stack/logs/molteniron >> conf.yaml"
-      echo "maxLogDays: 7 >> conf.yaml"
-      echo "sqlUser: molteniron >> conf.yaml"
-      echo "sqlPass: password >> conf.yaml"
+      echo "mi_port: 5656" >> conf.yaml
+      echo "serverIP: 172.16.97.20" >> conf.yaml
+      echo "maxTime: 120000" >> conf.yaml
+      echo "logdir: /opt/stack/logs/molteniron" >> conf.yaml
+      echo "maxLogDays: 7" >> conf.yaml
+      echo "sqlUser: molteniron" >> conf.yaml
+      echo "sqlPass: password" >> conf.yaml
 
 - name: Start moltenirond-helper
   shell: moltenirond-helper -c /opt/stack/molteniron start
