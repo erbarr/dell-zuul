@@ -1,5 +1,13 @@
 - name: Clone MoltenIron
-  shell: "sudo chmod 777 /opt; mkdir /opt/stack; cd /opt/stack; git clone https://opendev.org/openstack/molteniron"
+  shell:
+    cmd: |
+      sudo apt install python3-pip
+      sudo chmod 777 /opt
+      mkdir /opt/stack
+      cd /opt/stack
+      git clone https://opendev.org/openstack/molteniron
+      cd molteniron
+      sudo pip3 install .
 
 - name: Create conf.yaml
   shell:
@@ -18,7 +26,18 @@
   shell: moltenirond-helper -c /opt/stack/molteniron
 
 - name: Checkout BareMetal
-  shell: "molteniron -c /opt/stack/molteniron allocate {{ reserved_by }} 1 {{ build_label }} > /tmp/molteniron-checkout.json"
+  shell:
+    cmd: |
+      while :
+      do
+        molteniron -c /opt/stack/molteniron allocate {{ reserved_by }} 1 {{ build_label }} > /tmp/molteniron-checkout.json
+        rc=$?
+        if [ $rc == 0 ]
+        then
+          break
+        fi
+      echo "Waiting for BareMetal to Become Available"
+      done
 
 - name: Show molteniron-checkout.json
   shell: "cat /tmp/molteniron-checkout.json"
