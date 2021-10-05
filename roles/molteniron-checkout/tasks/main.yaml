@@ -14,6 +14,9 @@
       echo "sqlUser: molteniron >> conf.yaml"
       echo "sqlPass: password >> conf.yaml"
 
+- name: Start moltenirond-helper
+  shell: moltenirond-helper -c /opt/stack/molteniron
+
 - name: Checkout BareMetal
   shell: "molteniron -c /opt/stack/molteniron allocate {{ reserved_by }} 1 {{ build_label }} > /tmp/molteniron-checkout.json"
 
