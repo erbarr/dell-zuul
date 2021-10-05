@@ -30,6 +30,7 @@
 - name: Checkout BareMetal
   shell:
     cmd: |
+      #!/bin/bash
       while :
       do
         molteniron -c /opt/stack/molteniron allocate {{ reserved_by }} 1 {{ build_label }} > /tmp/molteniron-checkout.json
