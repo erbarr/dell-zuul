@@ -1,0 +1,34 @@
+- name: Clone MoltenIron
+  shell: "mkdir /opt/stack; cd /opt/stack; git clone https://opendev.org/openstack/molteniron"
+
+- name: Create conf.yaml
+  shell:
+    cmd: |
+      cd /opt/stack/molteniron
+      mkdir -p /opt/stack/logs/molteniron
+      echo "mi_port: 5656 >> conf.yaml"
+      echo "serverIP: 172.16.97.20 >> conf.yaml"
+      echo "maxTime: 120000 >> conf.yaml"
+      echo "logdir: /opt/stack/logs/molteniron >> conf.yaml"
+      echo "maxLogDays: 7 >> conf.yaml"
+      echo "sqlUser: molteniron >> conf.yaml"
+      echo "sqlPass: password >> conf.yaml"
+
+- name: Checkout BareMetal
+  shell: "molteniron -c /opt/stack/molteniron allocate {{ reserved_by }} 1 {{ build_label }} > /tmp/molteniron-checkout.json"
+
+- name: Show molteniron-checkout.json
+  shell: "cat /tmp/molteniron-checkout.json"
+
+- name: create hardware_info file
+  shell:
+    cmd: |
+      mkdir -p /opt/stack/devstack/files
+      bmcIp=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f23 | cut -d'"' -f2)
+      macAddr=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f13 | cut -d'"' -f2 | cut -d'\' -f1)
+      bmcUser=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f9 | cut -d'"' -f2 | cut -d'\' -f1)
+      bmcPassword=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f11 | cut -d'"' -f2 | cut -d'\' -f1)
+      echo "$bmcIp $macAddr $bmcUser $bmcPass /redfish/v1/Systems/System.Embedded.1 False" > /opt/stack/devstack/files/hardware_info
+
+- name: Show hardware_info
+  shell: "cat /opt/stack/devstack/files/hardware_info"
