@@ -51,7 +51,7 @@
       bmcIp=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f23 | cut -d'"' -f2)
       macAddr=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f13 | cut -d'"' -f2 | cut -d'\' -f1)
       bmcUser=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f9 | cut -d'"' -f2 | cut -d'\' -f1)
-      bmcPassword=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f11 | cut -d'"' -f2 | cut -d'\' -f1)
+      bmcPass=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f11 | cut -d'"' -f2 | cut -d'\' -f1)
       echo "$bmcIp $macAddr $bmcUser $bmcPass /redfish/v1/Systems/System.Embedded.1 False" > /opt/stack/devstack/files/hardware_info
 
 - name: Show hardware_info
