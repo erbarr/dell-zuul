@@ -1,7 +1,9 @@
 - name: Clone MoltenIron
   shell:
     cmd: |
-      sudo apt install python3-pip
+      sudo apt update -y
+      sudo apt upgrade -y
+      sudo apt install python3-pip -y
       sudo chmod 777 /opt
       mkdir /opt/stack
       cd /opt/stack
