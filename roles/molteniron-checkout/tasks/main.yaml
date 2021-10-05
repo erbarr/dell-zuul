@@ -25,7 +25,7 @@
       echo "sqlPass: password" >> conf.yaml
 
 - name: Start moltenirond-helper
-  shell: moltenirond-helper -c /opt/stack/molteniron start
+  shell: sudo moltenirond-helper -c /opt/stack/molteniron start
 
 - name: Checkout BareMetal
   shell:
