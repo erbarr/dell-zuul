@@ -34,7 +34,7 @@
       do
         molteniron -c /opt/stack/molteniron allocate {{ reserved_by }} 1 {{ build_label }} > /tmp/molteniron-checkout.json
         rc=$?
-        if [ $rc == 0 ]; then
+        if [ $rc = 0 ]; then
           break
         fi
       echo "Waiting for BareMetal to Become Available"
