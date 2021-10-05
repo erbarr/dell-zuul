@@ -1,5 +1,5 @@
 - name: Clone MoltenIron
-  shell: "mkdir /opt/stack; cd /opt/stack; git clone https://opendev.org/openstack/molteniron"
+  shell: "sudo chmod 777 /opt; mkdir /opt/stack; cd /opt/stack; git clone https://opendev.org/openstack/molteniron"
 
 - name: Create conf.yaml
   shell:
