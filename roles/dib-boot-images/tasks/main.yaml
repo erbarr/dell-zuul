@@ -2,7 +2,9 @@
   shell: sudo pip3 install diskimage-builder
 
 - name: Create Ubuntu Images
+  become: true
   shell:
+    executable: /bin/bash
     cmd: |
       mkdir -p /home/zuul/dib
       cd /home/zuul/dib
@@ -17,9 +19,10 @@
       disk-image-create ubuntu-minimal vm block-device-efi simple-init devuser openssh-server -o ubuntu-wholedisk-uefi
 
 - name: Upload images to glance
+  become: true
   shell:
+    executable: /bin/bash
     cmd: |
-      /bin/bash -c """
       source /opt/stack/devstack/openrc admin
       cd /home/zuul/dib
       openstack image create --public --disk-format aki --container-format aki --file ubuntu-partition.vmlinuz ubuntu-partition-kernel
@@ -28,4 +31,3 @@
       RAMDISK_UUID=$(openstack image list | grep ubuntu-partition-ramdisk | awk '{print $2}')
       openstack image create --public --disk-format qcow2 --container-format bare --property kernel_id=$KERNEL_UUID --property ramdisk_id=$RAMDISK_UUID --file ubuntu-partition.qcow2 ubuntu-partition
       openstack image create --public --disk-format qcow2 --container-format bare --file ubuntu-wholedisk-uefi.qcow2 ubuntu-wholedisk-uefi
-      """

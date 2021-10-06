@@ -1,4 +1,5 @@
 - name: Configure Tempest
+  become: true
   shell:
     cmd: |
       cd /opt/stack/tempest

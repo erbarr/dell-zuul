@@ -1,5 +1,7 @@
 - name: Write local.conf
+  become: true
   shell:
+    executable: /bin/bash
     cmd: |
       echo "[[local|localrc]]" >> /opt/stack/devstack/local.conf
       echo "IRONIC_HW_ARCH=x86_64" >> /opt/stack/devstack/local.conf

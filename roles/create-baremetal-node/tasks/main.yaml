@@ -1,7 +1,8 @@
 - name: Create BareMetal Node
+  become: true
   shell:
+    executable: /bin/bash
     cmd: |
-      /bin/bash -c """
       source /opt/stack/devstack/openrc admin
       KERNEL_UUID=$(openstack image list | grep redfish | grep kernel | awk '{print $2}')
       RAMDISK_UUID=$(openstack image list | grep redfish | grep ram | awk '{print $2}')
@@ -24,4 +25,3 @@
       openstack hypervisor list
       HYPE=$(openstack hypervisor list | grep ironic | awk '{print $2}')
       openstack hypervisor show $HYPE
-      """
