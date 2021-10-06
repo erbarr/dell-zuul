@@ -380,3 +380,4 @@
         - name: nodepool-focal
           label: nodepool-focal
     run: playbooks/basic_ops.yaml
+    post-run: playbooks/post.yaml
