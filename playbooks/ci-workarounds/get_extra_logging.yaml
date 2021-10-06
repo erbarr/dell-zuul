@@ -1,8 +1,8 @@
 - hosts: all
   tasks:
     - name: Get tftpd info from journald
-      shell: "journalctl -t in.tftpd  > {{ zuul_output_dir }}/logs/tftpd-journal.txt"
+      shell: "journalctl -t in.tftpd  > {{ ansible_user_dir }}/zuul-output/logs/tftpd-journal.txt"
       become: yes
     - name: Get network connection information for ironic process
-      shell: "netstat -apn  > {{ zuul_output_dir }}/logs/post-job-network-connections.txt"
+      shell: "netstat -apn  > {{ ansible_user_dir }}/zuul-output/logs/post-job-network-connections.txt"
       become: yes

@@ -2,9 +2,7 @@
   become_user: stack
   shell:
     cmd: |
-      sudo chmod 777 /opt
-      mkdir /opt/stack
-      cd /opt/stack
+      sudo chmod -R 777 /opt
       git clone https://opendev.org/openstack/molteniron
       cd molteniron
       sudo pip3 install .
