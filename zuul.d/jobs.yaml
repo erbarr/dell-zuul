@@ -237,8 +237,6 @@
     required-projects: &base_required-projects
       - opendev.org/openstack/tempest
     timeout: 7200
-    roles: &base_roles
-      - zuul: opendev.org/openstack/devstack
     vars: &base_vars
       devstack_services:
         tempest: true
