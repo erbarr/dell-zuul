@@ -5,7 +5,7 @@
     cmd: |
       source /opt/stack/devstack/openrc admin
       WHOLEDISK_UUID=$(openstack image list | grep ubuntu-wholedisk-uefi | awk '{print $2}')
-      PARTITION_UUID=$(openstack image list | grep ubuntu-parition | grep -v kernel | grep -v ram | awk '{print $2}')
+      PARTITION_UUID=$(openstack image list | grep ubuntu-partition | grep -v kernel | grep -v ram | awk '{print $2}')
       cd /opt/stack/tempest/etc
       sed -Ei 's/(whole_disk_image_checksum = ).*/\1/g' tempest.conf
       sed -Ei 's/(whole_disk_image_url = ).*/\1/g' tempest.conf

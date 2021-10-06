@@ -5,23 +5,37 @@
     cmd: |
       source /opt/stack/devstack/openrc admin
       KERNEL_UUID=$(openstack image list | grep redfish | grep kernel | awk '{print $2}')
+      sleep 3
       RAMDISK_UUID=$(openstack image list | grep redfish | grep ram | awk '{print $2}')
+      sleep 3
       IMAGE_UUID=$(openstack image list | grep ubuntu-wholedisk-uefi | awk '{print $2}')
+      sleep 3
       openstack baremetal node create --driver redfish --driver-info redfish_username=root --driver-info redfish_password=Dell0SS! --driver-info redfish_address=100.82.33.244 --driver-info deploy_kernel=$KERNEL_UUID --driver-info deploy_ramdisk=$RAMDISK_UUID --property capabilities=boot_mode:uefi --property cpu_arch=x86_64 --resource-class baremetal --property cpus=16 --property memory_mb=8192 --property local_gb=200 --driver-info redfish_system_id=/redfish/v1/Systems/System.Embedded.1 --driver-info redfish_auth_type=basic --driver-info redfish_verify_ca=False --name node-0
+      sleep 3
       NODE_UUID=$(openstack baremetal node list | grep enroll | awk '{print $2}')
+      sleep 3
       openstack baremetal node add trait $NODE_UUID CUSTOM_GOLD
+      sleep 3
       openstack baremetal node set $NODE_UUID --instance-info image_source=$IMAGE_UUID
+      sleep 3
       openstack baremetal node manage $NODE_UUID --wait 120
+      sleep 3
       openstack baremetal port create 70:B5:E8:F0:34:F2 --node $NODE_UUID --pxe-enabled=True
+      sleep 10
       IRONIC_PORT_UUID=$(openstack baremetal port list | grep -i 70:B5:E8:F0:34:F2 | awk '{print $2}')
+      sleep 3
       openstack baremetal node provide $NODE_UUID
+      sleep 10
       openstack baremetal node power off $NODE_UUID --power-timeout 60
+      sleep 3
       openstack baremetal node list
 
       sleep 60
 
       nova-manage cell_v2 discover_hosts --verbose
-      sleep 10
+      sleep 30
       openstack hypervisor list
+      sleep 5
       HYPE=$(openstack hypervisor list | grep ironic | awk '{print $2}')
+      sleep 5
       openstack hypervisor show $HYPE
