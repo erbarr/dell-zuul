@@ -1,0 +1,7 @@
+- name: testo
+  hosts: all
+  tasks:
+  - name: whoami
+    shell: whoami
+  - name: check dirs
+    shell: ls -lah /opt/stack
