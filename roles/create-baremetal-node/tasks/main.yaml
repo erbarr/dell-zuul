@@ -1,4 +1,4 @@
-- name: Create OVS bridge
+- name: Create BareMetal Node
   shell:
     cmd: |
       /bin/bash -c """
