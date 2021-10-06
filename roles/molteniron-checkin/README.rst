@@ -1,0 +1,1 @@
+Release the lock on BareMetal Server

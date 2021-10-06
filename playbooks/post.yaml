@@ -2,11 +2,7 @@
   roles:
     - fetch-output
     - merge-output-to-logs
-
-- hosts: all
-  ignore_errors: yes
-  roles:
-    - remove-build-sshkey
+    - molteniron-checkin
 
 - hosts: localhost
   gather_facts: False
