@@ -9,6 +9,7 @@
       sudo pip3 install .
 
 - name: Create conf.yaml
+  become_user: stack
   shell:
     cmd: |
       cd /opt/stack/molteniron
@@ -22,9 +23,11 @@
       echo "sqlPass: password" >> conf.yaml
 
 - name: Start moltenirond-helper
+  become_user: stack
   shell: sudo moltenirond-helper -c /opt/stack/molteniron start
 
 - name: Checkout BareMetal
+  become_user: stack
   shell:
     cmd: |
       while :
@@ -39,9 +42,11 @@
       done
 
 - name: Show molteniron-checkout.json
+  become_user: stack
   shell: "cat /tmp/molteniron-checkout.json"
 
 - name: create hardware_info file
+  become_user: stack
   shell:
     cmd: |
       mkdir -p /opt/stack/devstack/files
@@ -52,4 +57,5 @@
       echo "$bmcIp $macAddr $bmcUser $bmcPass /redfish/v1/Systems/System.Embedded.1 False" > /opt/stack/devstack/files/hardware_info
 
 - name: Show hardware_info
+  become_user: stack
   shell: "cat /opt/stack/devstack/files/hardware_info"
