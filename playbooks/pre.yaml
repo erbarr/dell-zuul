@@ -18,6 +18,7 @@
       command: journalctl -u growroot
   roles:
     - configure-resolvconf
+    - install-pip3
     - ensure-output-dirs
 
 - hosts: all
