@@ -1,8 +1,8 @@
 - hosts: all
   roles:
+    - molteniron-checkin
     - fetch-output
     - merge-output-to-logs
-    - molteniron-checkin
 
 - hosts: localhost
   gather_facts: False
