@@ -1,4 +1,5 @@
 - name: Clone MoltenIron
+  become_user: stack
   shell:
     cmd: |
       sudo chmod 777 /opt
