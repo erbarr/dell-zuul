@@ -3,6 +3,7 @@
   shell:
     cmd: |
       sudo chmod -R 777 /opt
+      cd /opt/stack
       git clone https://opendev.org/openstack/molteniron
       cd molteniron
       sudo pip3 install .
