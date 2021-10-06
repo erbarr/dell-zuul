@@ -1,7 +1,6 @@
 - job:
-    name: testo-base
+    name: dell-base
     parent: null
-    pre-run: playbooks/pre.yaml
     post-run: playbooks/post.yaml
     secrets:
       - name: site_logs
@@ -9,7 +8,7 @@
 
 - job:
     name: dell-devstack-base
-    parent: null
+    parent: dell-base
     abstract: true
     description: |
       Base abstract Devstack job.
@@ -365,7 +364,7 @@
 
 - job:
     name: testo
-    parent: testo-base
+    parent: dell-base
     nodeset:
       nodes:
         - name: nodepool-focal
@@ -380,4 +379,3 @@
         - name: nodepool-focal
           label: nodepool-focal
     run: playbooks/basic_ops.yaml
-    post-run: playbooks/post.yaml
