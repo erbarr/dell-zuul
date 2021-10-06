@@ -1,0 +1,1 @@
+Runs cat /opt/stack/devstack/local.conf

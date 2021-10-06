@@ -12,4 +12,3 @@
     projects: "{{ zuul.projects }}"
     project: "{{ zuul.project }}"
     tempest_plugins: "{{ tempest_plugins|default(omit) }}"
-  shell: cat /opt/stack/devstack/local.conf

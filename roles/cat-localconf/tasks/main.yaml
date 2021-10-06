@@ -1,0 +1,2 @@
+- name: cat local.conf
+  shell: cat /opt/stack/devstack/local.conf
