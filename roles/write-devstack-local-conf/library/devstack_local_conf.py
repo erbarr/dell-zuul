@@ -327,6 +327,7 @@ def main():
     )
 
     p = module.params
+    print(module.params)
     lc = LocalConf(p.get('localrc'),
                    p.get('local_conf'),
                    p.get('base_services'),
