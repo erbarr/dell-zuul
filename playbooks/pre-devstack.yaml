@@ -61,5 +61,5 @@
     - setup-devstack-cache
     - start-fresh-logging
     - molteniron-checkout
-    - write-devstack-local-conf
+    - write-localconf
     - cat-localconf

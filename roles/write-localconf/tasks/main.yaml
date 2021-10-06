@@ -1,0 +1,153 @@
+- name: Write local.conf
+  shell:
+    cmd: |
+      echo "[[local|localrc]]" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_HW_ARCH=x86_64" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_HW_NODE_CPU=4" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_HW_NODE_RAM=8192" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_HW_NODE_DISK=40" >> /opt/stack/devstack/local.conf
+      echo "ALLOCATION_POOL=\"172.16.99.200,172.16.99.202\"" >> /opt/stack/devstack/local.conf
+      echo "HOST_IP=$(ip addr show dev ens5 | grep 172.16.99 | cut -d' ' -f6 | cut -d'/' -f1)" >> /opt/stack/devstack/local.conf
+      echo "disable_service n-net n-novnc horizon" >> /opt/stack/devstack/local.conf
+      echo "enable_service q-svc q-agt q-dhcp q-meta tempest" >> /opt/stack/devstack/local.conf
+      echo "enable_service neutron" >> /opt/stack/devstack/local.conf
+      echo "Q_USE_DEBUG_COMMAND=True" >> /opt/stack/devstack/local.conf
+      echo "NETWORK_GATEWAY=172.16.99.254" >> /opt/stack/devstack/local.conf
+      echo "DATA_DIR=/opt/stack/data" >> /opt/stack/devstack/local.conf
+      echo "ACTIVE_TIMEOUT=90" >> /opt/stack/devstack/local.conf
+      echo "BOOT_TIMEOUT=90" >> /opt/stack/devstack/local.conf
+      echo "ASSOCIATE_TIMEOUT=60" >> /opt/stack/devstack/local.conf
+      echo "TERMINATE_TIMEOUT=60" >> /opt/stack/devstack/local.conf
+      echo "MYSQL_PASSWORD=secret" >> /opt/stack/devstack/local.conf
+      echo "DATABASE_PASSWORD=secret" >> /opt/stack/devstack/local.conf
+      echo "RABBIT_PASSWORD=secret" >> /opt/stack/devstack/local.conf
+      echo "ADMIN_PASSWORD=secret" >> /opt/stack/devstack/local.conf
+      echo "SERVICE_PASSWORD=secret" >> /opt/stack/devstack/local.conf
+      echo "SERVICE_TOKEN=111222333444" >> /opt/stack/devstack/local.conf
+      echo "SWIFT_HASH=1234123412341234" >> /opt/stack/devstack/local.conf
+      echo "ROOTSLEEP=0" >> /opt/stack/devstack/local.conf
+      echo "ERROR_ON_CLONE=False" >> /opt/stack/devstack/local.conf
+      echo "NOVNC_FROM_PACKAGE=True" >> /opt/stack/devstack/local.conf
+      echo "ENABLED_SERVICES=ceilometer-acentral,ceilometer-acompute,ceilometer-alarm-evaluator,ceilometer-alarm-notifier,ceilometer-anotification,ceilometer-api,ceilometer-collector,dstat,etcd3,g-api,g-reg,ir-api,ir-cond,key,mysql,n-api,n-api-meta,n-cauth,n-cond,n-cpu,n-novnc,n-obj,n-sch,memory_tracker,placement-api,q-agt,q-dhcp,q-l3,q-meta,q-metering,q-svc,rabbit,s-account,s-container,s-object,s-proxy,tempest" >> /opt/stack/devstack/local.conf
+      echo "SKIP_EXERCISES=boot_from_volume,bundle,client-env,euca" >> /opt/stack/devstack/local.conf
+      echo "SYSLOG=False" >> /opt/stack/devstack/local.conf
+      echo "SCREEN_LOGDIR=/opt/stack/screen-logs" >> /opt/stack/devstack/local.conf
+      echo "VERBOSE=True" >> /opt/stack/devstack/local.conf
+      echo "IPV4_ADDRS_SAFE_TO_USE=172.16.99.0/24" >> /opt/stack/devstack/local.conf
+      echo "FLOATING_RANGE=172.16.97.0/24" >> /opt/stack/devstack/local.conf
+      echo "PUBLIC_NETWORK_GATEWAY=172.16.97.254" >> /opt/stack/devstack/local.conf
+      echo "FIXED_NETWORK_SIZE=256" >> /opt/stack/devstack/local.conf
+      echo "VIRT_DRIVER=ironic" >> /opt/stack/devstack/local.conf
+      echo "SWIFT_REPLICAS=1" >> /opt/stack/devstack/local.conf
+      echo "SWIFT_START_ALL_SERVICES=False" >> /opt/stack/devstack/local.conf
+      echo "LOG_COLOR=False" >> /opt/stack/devstack/local.conf
+      echo "UNDO_REQUIREMENTS=False" >> /opt/stack/devstack/local.conf
+      echo "CINDER_PERIODIC_INTERVAL=10" >> /opt/stack/devstack/local.conf
+      echo "export OS_NO_CACHE=True" >> /opt/stack/devstack/local.conf
+      echo "LIBS_FROM_GIT=" >> /opt/stack/devstack/local.conf
+      echo "EBTABLES_RACE_FIX=True" >> /opt/stack/devstack/local.conf
+      echo "DEBUG_LIBVIRT_COREDUMPS=True" >> /opt/stack/devstack/local.conf
+      echo "CINDER_VOLUME_CLEAR=none" >> /opt/stack/devstack/local.conf
+      echo "LOGDIR=opt/stack/logs" >> /opt/stack/devstack/local.conf
+      echo "LOGFILE=/opt/stack/logs/devstacklog.txt" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_VM_LOG_DIR=/opt/stack/logs/ironic-bm-logs" >> /opt/stack/devstack/local.conf
+      echo "BUILD_TIMEOUT=1200" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_CALLBACK_TIMEOUT=1200" >> /opt/stack/devstack/local.conf
+      echo "Q_AGENT=openvswitch" >> /opt/stack/devstack/local.conf
+      echo "Q_ML2_TENANT_NETWORK_TYPE=vxlan" >> /opt/stack/devstack/local.conf
+      echo "Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_ENABLED_DRIVERS=fake,pxe_ipmitool" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_VM_EPHEMERAL_DISK=1" >> /opt/stack/devstack/local.conf
+      echo "VOLUME_BACKING_FILE_SIZE=24G" >> /opt/stack/devstack/local.conf
+      echo "FORCE_CONFIG_DRIVE=True" >> /opt/stack/devstack/local.conf
+
+      echo "IRONIC_VM_SPECS_RAM=1024" >> /opt/stack/devstack/local.conf
+      echo "enable_plugin ironic https://opendev.org/openstack/ironic" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_AUTOMATED_CLEAN_ENABLED=False" >> /opt/stack/devstack/local.conf
+      echo "disable_service n-net n-novnc horizon" >> /opt/stack/devstack/local.conf
+      echo "enable_service s-proxy s-object s-container s-account" >> /opt/stack/devstack/local.conf
+      echo "enable_service ironic ir-api ir-cond neutron" >> /opt/stack/devstack/local.conf
+      echo "PUBLIC_INTERFACE=ens5" >> /opt/stack/devstack/local.conf
+      echo "Q_USE_PROVIDER_NETWORKING=True" >> /opt/stack/devstack/local.conf
+      echo "OVS_PHYSICAL_BRIDGE=br-ironic" >> /opt/stack/devstack/local.conf
+      echo "PHYSICAL_NETWORK=private" >> /opt/stack/devstack/local.conf
+      echo "PROVIDER_NETWORK_TYPE="flat"" >> /opt/stack/devstack/local.conf
+      echo "FIXED_RANGE=172.16.99.0/24" >> /opt/stack/devstack/local.conf
+      echo "Q_L3_ENABLED=False" >> /opt/stack/devstack/local.conf
+      echo "ENABLE_ISOLATED_METADATA=True" >> /opt/stack/devstack/local.conf
+      echo "IP_VERSION=4" >> /opt/stack/devstack/local.conf
+      echo "Q_USE_SECGROUP=False" >> /opt/stack/devstack/local.conf
+      echo "USE_SUBNETPOOL=False" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_VM_COUNT=0" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_DEPLOY_DRIVER_ISCSI_WITH_IPA=True" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_IPXE_ENABLED=True" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_INSPECTOR_BUILD_RAMDISK=False" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_INSPECTOR_TEMPEST_INTROSPECTION_TIMEOUT=1800" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_TEMPEST_BUILD_TIMEOUT=1800" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_RAMDISK_TYPE=dib" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_BUILD_DEPLOY_RAMDISK=False" >> /opt/stack/devstack/local.conf
+      echo "IPA_BRANCH=master" >> /opt/stack/devstack/local.conf
+
+      echo "IRONIC_AGENT_KERNEL_URL=https://tarballs.opendev.org/openstack/ironic-python-agent/dib/files/ipa-centos8-master.kernel" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_AGENT_RAMDISK_URL=https://tarballs.opendev.org/openstack/ironic-python-agent/dib/files/ipa-centos8-master.initramfs" >> /opt/stack/devstack/local.conf
+
+      echo "IRONIC_IS_HARDWARE=True" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_BAREMETAL_BASIC_OPS=True" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_HWINFO_FILE=/opt/stack/devstack/files/hardware_info" >> /opt/stack/devstack/local.conf
+      echo "DEFAULT_INSTANCE_TYPE=baremetal" >> /opt/stack/devstack/local.conf
+      echo "DEBUG=True" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_CONF=/etc/ironic/ironic.conf" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_BOOT_MODE=uefi" >> /opt/stack/devstack/local.conf
+
+      echo "IRONIC_DEPLOY_DRIVER=redfish" >> /opt/stack/devstack/local.conf
+
+      echo "IRONIC_ENABLED_POWER_INTERFACES=redfish,ipmitool,fake" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_ENABLED_MANAGEMENT_INTERFACES=redfish,ipmitool,noop,fake" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_ENABLED_INSPECT_INTERFACES=redfish,no-inspect,inspector" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_ENABLED_RAID_INTERFACES=no-raid" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_ENABLED_VENDOR_INTERFACES=ipmitool,no-vendor" >> /opt/stack/devstack/local.conf
+
+      echo "IRONIC_ENABLED_HARDWARE_TYPES=redfish" >> /opt/stack/devstack/local.conf
+
+      echo "# IRONIC_DEPLOY_DRIVER=idrac" >> /opt/stack/devstack/local.conf
+
+      echo "# IRONIC_ENABLED_POWER_INTERFACES=idrac-wsman" >> /opt/stack/devstack/local.conf
+      echo "# IRONIC_ENABLED_MANAGEMENT_INTERFACES=idrac-wsman" >> /opt/stack/devstack/local.conf
+      echo "# IRONIC_ENABLED_INSPECT_INTERFACES=idrac-wsman" >> /opt/stack/devstack/local.conf
+      echo "# IRONIC_ENABLED_RAID_INTERFACES=idrac-wsman" >> /opt/stack/devstack/local.conf
+      echo "# IRONIC_ENABLED_VENDOR_INTERFACES=idrac-wsman" >> /opt/stack/devstack/local.conf
+
+      echo "# IRONIC_ENABLED_HARDWARE_TYPES=idrac" >> /opt/stack/devstack/local.conf
+
+      echo "IRONIC_ENABLED_DEPLOY_INTERFACES=direct" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_ENABLED_NETWORK_INTERFACES=flat,noop" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_API_VERSION=latest" >> /opt/stack/devstack/local.conf
+      echo "USE_PYTHON3=True" >> /opt/stack/devstack/local.conf
+      echo "PYTHON3_VERSION=3.8" >> /opt/stack/devstack/local.conf
+
+      echo "DOWNLOAD_DEFAULT_IMAGES=False" >> /opt/stack/devstack/local.conf
+      echo "#IMAGE_URLS=file:///opt/stack/x-overcloud/overcloud-full.tar.gz" >> /opt/stack/devstack/local.conf
+      echo "#DEFAULT_IMAGE_NAME=overcloud-full" >> /opt/stack/devstack/local.conf
+
+      echo "TEMPEST_SSH_CONNECT_METHOD=fixed" >> /opt/stack/devstack/local.conf
+      echo "INSTALL_TEMPEST=False" >> /opt/stack/devstack/local.conf
+      echo "TEMPEST_PLUGINS=/opt/stack/ironic-tempest-plugin" >> /opt/stack/devstack/local.conf
+
+      echo "[[post-config|/etc/ironic/ironic.conf]]" >> /opt/stack/devstack/local.conf
+      echo "[conductor]" >> /opt/stack/devstack/local.conf
+      echo "force_power_state_during_sync=false" >> /opt/stack/devstack/local.conf
+      echo "[pxe]" >> /opt/stack/devstack/local.conf
+      echo "pxe_append_params = nofb nomodeset systemd.journald.forward_to_console=yes" >> /opt/stack/devstack/local.conf
+      echo "[redfish]" >> /opt/stack/devstack/local.conf
+      echo "kernel_append_params = nofb nomodeset systemd.journald.forward_to_console=yes" >> /opt/stack/devstack/local.conf
+      echo "[[post-extra|\$TEMPEST_CONFIG]]" >> /opt/stack/devstack/local.conf
+      echo "[baremetal]" >> /opt/stack/devstack/local.conf
+      echo "unprovision_timeout=1800" >> /opt/stack/devstack/local.conf
+      echo "deploywait_timeout=1800" >> /opt/stack/devstack/local.conf
+      echo "active_timeout=300" >> /opt/stack/devstack/local.conf
+      echo "ssh_connect_method=fixed" >> /opt/stack/devstack/local.conf
+      echo "run_validation=false" >> /opt/stack/devstack/local.conf
+      echo "[validation]" >> /opt/stack/devstack/local.conf
+      echo "ssh_timeout=1200" >> /opt/stack/devstack/local.conf
+      echo "run_validation=false" >> /opt/stack/devstack/local.conf
+  become_user: stack
