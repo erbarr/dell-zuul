@@ -1,7 +1,4 @@
-- name: testo
+- name: basic_ops
   hosts: all
-  tasks:
-  - name: whoami
-    shell: whoami
-  - name: check dirs
-    shell: ls -lah /opt/stack
+  roles:
+    - run-devstack
