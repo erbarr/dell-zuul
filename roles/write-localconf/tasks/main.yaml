@@ -6,7 +6,7 @@
       echo "IRONIC_HW_NODE_CPU=4" >> /opt/stack/devstack/local.conf
       echo "IRONIC_HW_NODE_RAM=8192" >> /opt/stack/devstack/local.conf
       echo "IRONIC_HW_NODE_DISK=40" >> /opt/stack/devstack/local.conf
-      echo "ALLOCATION_POOL=\"172.16.99.239,172.16.99.241\"" >> /opt/stack/devstack/local.conf
+      echo "ALLOCATION_POOL=\"start=172.16.99.239,end=172.16.99.241\"" >> /opt/stack/devstack/local.conf
       echo "HOST_IP=$(ip addr show dev ens5 | grep 172.16.99 | cut -d' ' -f6 | cut -d'/' -f1)" >> /opt/stack/devstack/local.conf
       echo "disable_service n-net n-novnc horizon" >> /opt/stack/devstack/local.conf
       echo "enable_service q-svc q-agt q-dhcp q-meta tempest" >> /opt/stack/devstack/local.conf
