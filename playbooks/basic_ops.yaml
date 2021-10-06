@@ -1,4 +1,6 @@
 - name: basic_ops
   hosts: all
   roles:
+    - create-ovs-bridge
     - run-devstack
+    - dib-boot-images

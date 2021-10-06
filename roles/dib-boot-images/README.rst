@@ -1,0 +1,1 @@
+Install diskimage-builder, create ubuntu based images and upload them to glance

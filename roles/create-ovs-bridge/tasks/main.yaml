@@ -1,0 +1,13 @@
+- name: Create OVS bridge
+  shell:
+    cmd: |
+      ip=$(ip addr show dev ens5 | grep 172.16.99 | cut -d' ' -f6 | cut -d'/' -f1)
+      mac=$(ip addr show dev ens5 | grep link/ether | cut -d' ' -f6)
+      sudo apt install -y openvswitch-switch
+      sudo ovs-vsctl add-br br-ironic
+      sudo ovs-vsctl add-port br-ironic ens5
+      sudo ovs-vsctl set bridge br-ironic other_config:hwaddr="$mac"
+      sudo ip addr add $ip/24 dev br-ironic
+      sudo ip addr flush ens5
+      sudo ip link set br-ironic up
+      ip a
