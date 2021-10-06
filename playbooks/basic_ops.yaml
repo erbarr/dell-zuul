@@ -4,3 +4,6 @@
     - create-ovs-bridge
     - run-devstack
     - dib-boot-images
+    - configure-tempest
+    - create-baremetal-node
+    - run-basic-ops

@@ -1,0 +1,19 @@
+- name: Configure Tempest
+  shell:
+    cmd: |
+      /bin/bash -c """
+      source /opt/stack/devstack/openrc admin
+      WHOLEDISK_UUID=$(openstack image list | grep ubuntu-wholedisk-uefi | awk '{print $2}')
+      PARTITION_UUID=$(openstack image list | grep ubuntu-parition | grep -v kernel | grep -v ram | awk '{print $2}')
+      cd /opt/stack/tempest/etc
+      sed -Ei 's/(whole_disk_image_checksum = ).*/\1/g' tempest.conf
+      sed -Ei 's/(whole_disk_image_url = ).*/\1/g' tempest.conf
+      sed -Ei 's/(ssh_timeout = ).*/ssh_timeout = 1800/g' tempest.conf
+      sed -Ei 's/(build_timeout = ).*/build_timeout = 1800/g' tempest.conf
+      sed -Ei 's/(image_ssh_user = ).*/image_ssh_user = root/g' tempest.conf
+      sed -Ei 's/(image_ref = ).*/\1'$WHOLEDISK_UUID'/g' tempest.conf
+      sed -Ei 's/(image_ref_alt = ).*/\1'$WHOLEDISK_UUID'/g' tempest.conf
+      sed -Ei 's/(whole_disk_image_ref = ).*/\1'$WHOLEDISK_UUID'/g' tempest.conf
+      sed -Ei 's/(partition_image_ref = ).*/\1'$PARTITION_UUID'/g' tempest.conf
+      cat tempest.conf
+      """

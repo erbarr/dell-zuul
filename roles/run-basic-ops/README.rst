@@ -1,0 +1,1 @@
+Executes tempest baremetal basic ops

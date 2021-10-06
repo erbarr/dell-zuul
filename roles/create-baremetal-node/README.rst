@@ -1,0 +1,1 @@
+Creates BareMetal node as needed

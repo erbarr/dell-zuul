@@ -1,0 +1,5 @@
+- name: Configure Tempest
+  shell:
+    cmd: |
+      cd /opt/stack/tempest
+      OS_TEST_TIMEOUT=2400 tox -e all -- ironic_tempest_plugin.tests.scenario.test_baremetal_basic_ops.BaremetalBasicOps.test_baremetal_server_ops_wholedisk_image --concurrency=1
