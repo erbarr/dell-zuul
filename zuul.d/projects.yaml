@@ -2,4 +2,4 @@
     name: opendev/ci-sandbox
     check:
       jobs:
-        - 14G-uefi-redfish
+        - 15G-uefi-redfish

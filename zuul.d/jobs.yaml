@@ -370,7 +370,7 @@
     run: playbooks/testo.yaml
 
 - job:
-    name: 14G-uefi-redfish
+    name: 15G-uefi-redfish
     parent: dell-ironic-base
     nodeset:
       nodes:

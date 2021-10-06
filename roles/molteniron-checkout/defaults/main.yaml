@@ -1,2 +1,2 @@
-build_label: "14G_UEFI"
+build_label: "15G_UEFI"
 reserved_by: "{{ zuul.build[:7] }}"
