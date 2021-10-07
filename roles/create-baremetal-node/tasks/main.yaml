@@ -16,9 +16,9 @@
       sleep 3
       openstack baremetal node add trait $NODE_UUID CUSTOM_GOLD
       sleep 3
-      openstack baremetal node set $NODE_UUID --instance-info image_source=$IMAGE_UUID
+      openstack baremetal node set $NODE_UUID --instance-info image_source=$IMAGE_UUID --instance-info root_gb=100
       sleep 3
-      openstack baremetal node manage $NODE_UUID --wait 120
+      openstack baremetal node manage $NODE_UUID --wait 240
       sleep 3
       openstack baremetal port create 70:B5:E8:F0:34:F2 --node $NODE_UUID --pxe-enabled=True
       sleep 10
