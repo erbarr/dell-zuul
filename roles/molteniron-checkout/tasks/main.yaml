@@ -7,6 +7,7 @@
       git clone https://opendev.org/openstack/molteniron
       cd molteniron
       sudo pip3 install .
+      sudo pip3 install 'PyYAML==5.4.1'
 
 - name: Create conf.yaml
   become_user: stack
