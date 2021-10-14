@@ -365,8 +365,8 @@
     parent: dell-base
     nodeset:
       nodes:
-        - name: nodepool-focal
-          label: nodepool-focal
+        - name: nodepool-bionic
+          label: nodepool-bionic
     run: playbooks/testo.yaml
 
 - job:

@@ -3,3 +3,4 @@
     check:
       jobs:
         - 15G-uefi-redfish
+        - testo
