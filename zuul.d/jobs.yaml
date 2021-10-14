@@ -367,6 +367,7 @@
       nodes:
         - name: nodepool-bionic
           label: nodepool-bionic
+    pre-run: playbooks/pre.yaml
     run: playbooks/testo.yaml
 
 - job:
