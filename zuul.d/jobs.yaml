@@ -371,6 +371,14 @@
     run: playbooks/testo.yaml
 
 - job:
+    name: testo
+    branches: master
+    nodeset:
+      nodes:
+        - name: nodepool-focal
+          label: nodepool-focal
+
+- job:
     name: 15G-uefi-redfish
     parent: dell-ironic-base
     nodeset:
