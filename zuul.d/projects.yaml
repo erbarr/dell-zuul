@@ -1,5 +1,11 @@
 - project:
-    name: opendev/ci-sandbox
+    name: openstack/ironic
+    check:
+      jobs:
+        - 14G-uefi-redfish
+
+- project:
+    name: openstack/sushy
     check:
       jobs:
         - 14G-uefi-redfish
