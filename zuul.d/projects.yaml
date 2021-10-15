@@ -2,4 +2,6 @@
     name: opendev/ci-sandbox
     check:
       jobs:
-        - testo
+        - 14G-uefi-redfish
+        - 14G-uefi-idrac
+        - 14G-uefi-ipmi
