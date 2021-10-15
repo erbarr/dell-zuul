@@ -30,10 +30,12 @@
 - name: Checkout BareMetal
   become_user: stack
   shell:
+    executable: /bin/bash
     cmd: |
+      hardware_label="$(echo {{ zuul.job }} | cut -d'-' -f1)_$(echo {{ zuul.job }} | cut -d'-' -f2)"
       while :
       do
-        molteniron -c /opt/stack/molteniron allocate {{ reserved_by }} 1 {{ build_label }} > /tmp/molteniron-checkout.json
+        molteniron -c /opt/stack/molteniron allocate {{ reserved_by }} 1 $hardware_label > /tmp/molteniron-checkout.json
         rc=$?
         if [ $rc = 0 ]; then
           break

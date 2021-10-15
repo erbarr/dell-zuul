@@ -3,6 +3,8 @@
     description: |
       Runs tests and uploads results upstream.
     manager: independent
+    footer-message: |
+      For 3rd party CI contact info: https://wiki.openstack.org/wiki/ThirdPartySystems/DellEMC_Ironic_CI
     require:
       gerrit:
         current-patchset: True
@@ -12,3 +14,7 @@
         - event: change-restored
         - event: comment-added
           comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*dell-recheck
+    success:
+      gerrit: {}
+    failure:
+      gerrit: {}
