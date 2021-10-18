@@ -12,6 +12,13 @@
       fi
       sudo pip3 install .
       sudo pip3 install 'PyYAML==5.4.1'
+      if [[ {{ zuul.branch }} == stable/train ]]; then
+        sh "sudo apt install -y ovmf"
+        sh "sudo chmod 777 /usr/share/"
+        sh "sudo mkdir /var/lib/libvirt"
+        sh "sudo mkdir /var/lib/libvirt/images"
+        sh "sudo chmod 777 /var/lib/libvirt/images"
+      fi
 
 - name: Create conf.yaml
   become_user: stack
