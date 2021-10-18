@@ -1,14 +1,20 @@
 - name: Clone MoltenIron
+  become_user: stack
   shell:
+    executable: /bin/bash
     cmd: |
       sudo chmod -R 777 /opt
       cd /opt/stack
       git clone https://opendev.org/openstack/molteniron
       cd molteniron
+      if [[ {{ zuul.branch }} == stable/train || {{ zuul.branch }} == stable/ussuri ]]; then
+        sudo pip3 install 'setuptools<58'
+      fi
       sudo pip3 install .
       sudo pip3 install 'PyYAML==5.4.1'
 
 - name: Create conf.yaml
+  become_user: stack
   shell:
     cmd: |
       cd /opt/stack/molteniron
@@ -22,9 +28,11 @@
       echo "sqlPass: password" >> conf.yaml
 
 - name: Start moltenirond-helper
+  become_user: stack
   shell: sudo moltenirond-helper -c /opt/stack/molteniron start
 
 - name: Checkout BareMetal
+  become_user: stack
   shell:
     executable: /bin/bash
     cmd: |
@@ -41,9 +49,11 @@
       done
 
 - name: Show molteniron-checkout.json
+  become_user: stack
   shell: "cat /tmp/molteniron-checkout.json"
 
 - name: create hardware_info file
+  become_user: stack
   shell:
     cmd: |
       mkdir -p /opt/stack/devstack/files
@@ -54,4 +64,5 @@
       echo "$bmcIp $macAddr $bmcUser $bmcPass /redfish/v1/Systems/System.Embedded.1 False" > /opt/stack/devstack/files/hardware_informo
 
 - name: Show hardware_info
+  become_user: stack
   shell: "cat /opt/stack/devstack/files/hardware_informo"
