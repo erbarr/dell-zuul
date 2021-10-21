@@ -1,0 +1,1 @@
+Download pre-built dib images and upload them to glance

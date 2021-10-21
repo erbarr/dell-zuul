@@ -3,9 +3,19 @@
     check:
       jobs:
         - 14G-uefi-redfish
+        - 14G-uefi-idrac
+        - 14G-uefi-ipmi
+        - XE2420-uefi-redfish
+        - R7525-uefi-redfish
+        - 13G-bios-idrac
+        - 13G-bios-ipmi
+        - 14G-bios-idrac
+        - 14G-bios-redfish
+        - R6515-bios-idrac
 
 - project:
     name: openstack/sushy
     check:
       jobs:
         - 14G-uefi-redfish
+        - R6515-bios-redfish
