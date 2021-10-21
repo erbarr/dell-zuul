@@ -11,7 +11,7 @@
       fileserver: "{{ site_logs }}"
     - generate-zuul-manifest
     
-- hosts: 172.16.97.20
+- hosts: 172.16.97.6
   gather_facts: False
   roles:
     - role: upload-logs
