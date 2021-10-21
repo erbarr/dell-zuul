@@ -5,10 +5,10 @@
     cmd: |
       source /opt/stack/devstack/openrc admin
 
-      bmcIp=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f23 | cut -d'"' -f2)
-      macAddr=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f13 | cut -d'"' -f2 | cut -d'\' -f1)
-      bmcUser=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f9 | cut -d'"' -f2 | cut -d'\' -f1)
-      bmcPass=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f11 | cut -d'"' -f2 | cut -d'\' -f1)
+      bmcIp=$(cat /opt/stack/devstack/files/hardware_informo | cut -d' ' -f1)
+      macAddr=$(cat /opt/stack/devstack/files/hardware_informo | cut -d' ' -f2)
+      bmcUser=$(cat /opt/stack/devstack/files/hardware_informo | cut -d' ' -f3)
+      bmcPass=$(cat /opt/stack/devstack/files/hardware_informo | cut -d' ' -f4)
       bootMode=$(echo {{ zuul.job }} | cut -d'-' -f2)
       ironicDriver=$(echo {{ zuul.job }} | cut -d'-' -f3)
       KERNEL_UUID=$(openstack image list | grep redfish | grep kernel | awk '{print $2}')

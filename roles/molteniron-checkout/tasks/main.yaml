@@ -66,10 +66,10 @@
   shell:
     cmd: |
       mkdir -p /opt/stack/devstack/files
-      bmcIp=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f23 | cut -d'"' -f2)
-      macAddr=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f13 | cut -d'"' -f2 | cut -d'\' -f1)
-      bmcUser=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f9 | cut -d'"' -f2 | cut -d'\' -f1)
-      bmcPass=$(cat /tmp/molteniron-checkout.json | cut -d' ' -f11 | cut -d'"' -f2 | cut -d'\' -f1)
+      bmcIp=$(molteniron -c /opt/stack/molteniron get_field {{ reserved_by }} ipmi_ip | cut -d' ' -f7 | cut -d'"' -f2)
+      macAddr=$(molteniron -c /opt/stack/molteniron get_field {{ reserved_by }} port_hwaddr | cut -d' ' -f7 | cut -d'"' -f2)
+      bmcUser=$(molteniron -c /opt/stack/molteniron get_field {{ reserved_by }} ipmi_user | cut -d' ' -f7 | cut -d'"' -f2)
+      bmcPass=$(molteniron -c /opt/stack/molteniron get_field {{ reserved_by }} ipmi_password | cut -d' ' -f7 | cut -d'"' -f2)
       echo "$bmcIp $macAddr $bmcUser $bmcPass"
       echo "$bmcIp $macAddr $bmcUser $bmcPass /redfish/v1/Systems/System.Embedded.1 False" > /opt/stack/devstack/files/hardware_informo
 

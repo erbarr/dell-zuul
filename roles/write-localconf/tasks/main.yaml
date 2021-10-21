@@ -178,7 +178,7 @@
         echo "IRONIC_ENABLED_HARDWARE_TYPES=ipmi" >> /opt/stack/devstack/local.conf
       fi
 
-      echo "IRONIC_ENABLED_DEPLOY_INTERFACES=$ironicEnabledDeployInterface" >> /opt/stack/devstack/local.conf
+      echo "IRONIC_ENABLED_DEPLOY_INTERFACES=$ironicEnabledDeployInterfaces" >> /opt/stack/devstack/local.conf
       echo "IRONIC_ENABLED_NETWORK_INTERFACES=flat,noop" >> /opt/stack/devstack/local.conf
       echo "IRONIC_API_VERSION=latest" >> /opt/stack/devstack/local.conf
       echo "USE_PYTHON3=True" >> /opt/stack/devstack/local.conf
