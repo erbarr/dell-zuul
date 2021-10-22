@@ -564,3 +564,20 @@
       nodes:
         - name: nodepool-bionic
           label: nodepool-bionic
+
+- job:
+    name: R6515-bios-redfish
+    parent: dell-ironic-base
+    nodeset:
+      nodes:
+        - name: nodepool-focal
+          label: nodepool-focal
+    run: playbooks/basic_ops.yaml
+
+- job:
+    name: R6515-bios-redfish
+    branches: [stable/ussuri, stable/train]
+    nodeset:
+      nodes:
+        - name: nodepool-bionic
+          label: nodepool-bionic
