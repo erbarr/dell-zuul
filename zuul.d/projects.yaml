@@ -19,3 +19,9 @@
       jobs:
         - 14G-uefi-redfish
         - R6515-bios-redfish
+
+- project:
+    name: opendev/ci-sandbox
+    check:
+      jobs:
+        - 14G-uefi-redfish

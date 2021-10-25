@@ -1,3 +1,4 @@
 zuul_logserver_root: /var/www/html/logs
 zuul_log_compress: false
 zuul_log_verbose: true
+zuul_log_url: "https://stash.dellemc-community.org/logs"
