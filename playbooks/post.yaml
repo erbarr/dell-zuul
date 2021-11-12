@@ -1,5 +1,6 @@
 - hosts: all
   roles:
+    - molteniron-checkin
     - fetch-output
     - merge-output-to-logs
 
