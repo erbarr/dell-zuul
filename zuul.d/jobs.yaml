@@ -2,6 +2,7 @@
     name: dell-base
     parent: null
     post-run: playbooks/post.yaml
+    cleanup-run: playbooks/cleanup.yaml
     secrets:
       - name: site_logs
         secret: site_logs

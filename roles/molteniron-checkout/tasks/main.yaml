@@ -11,7 +11,6 @@
         sudo pip3 install 'setuptools<58'
       fi
       sudo pip3 install .
-      sudo pip3 install 'PyYAML==5.4.1'
       if [[ {{ zuul.branch }} == stable/train ]]; then
         sudo apt install -y ovmf
         sudo chmod 777 /usr/share/
