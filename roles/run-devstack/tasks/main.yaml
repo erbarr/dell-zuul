@@ -1,5 +1,6 @@
 - name: Run devstack
   shell:
+    executable: /bin/bash
     cmd: |
       if [[ {{ zuul.branch }} == stable/train ]]; then
         rm -rf /opt/stack/tempest
