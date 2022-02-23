@@ -1,6 +1,9 @@
 - name: Run devstack
   shell:
     cmd: |
+      if [[ {{ zuul.branch }} == stable/train ]]; then
+        rm -rf /opt/stack/tempest
+      fi
       ./stack.sh 2>&1
       rc=$?
       echo "*** FINISHED ***"
